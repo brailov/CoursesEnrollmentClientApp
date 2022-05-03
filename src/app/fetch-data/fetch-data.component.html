@@ -1,0 +1,71 @@
+<h1 id="tableLabel">Welcome to University enrollment page</h1>
+
+<div style="align-content:center">Course List</div>
+<p *ngIf="!allCourses"><em>לא קיימים קורסים במערכת...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="allCourses">
+  <thead>
+    <tr>
+      <td> Title </td>
+      <td> LectorName </td>
+      <td> Year </td>
+      <td> Semester </td>
+      <td> Mandatory </td>
+      <td> Credits </td>
+      <td> Duration </td>
+    </tr>   
+  </thead>
+  <tbody>   
+    <tr *ngFor="let course of allCourses">
+      <td>{{ course.Title }} </td>
+      <td>{{ course.LectorName }}</td>
+      <td>{{ course.Year }}</td>
+      <td>{{ course.Semester }}</td>
+      <td>{{ course.Mandatory }}</td>
+      <td>{{ course.Credits }}</td>
+      <td>{{ course.Duration }}</td>
+      <td><button type="button" (click)="AddCourseToEnrollment(course)" [ngClass]="button" 
+        *ngIf="enrollmentStatus"> Add </button></td>     
+    </tr>
+  </tbody>
+</table>
+<div style="display: block;float: right;">
+  <div style="float: right;padding-left: 10px;"><button type="button" (click)="AddEnrollment()" [ngClass]="button" [disabled]="enrollmentStatus"> יצירת הרשמה </button></div>
+  <div style="float: right;padding-left: 10px;"><button type="submit" (click)="DeleteEnrollment()" [ngClass]="button" [disabled]="!enrollmentStatus"> ביטול הרשמה </button></div>
+  <div style="float: right;padding-left: 10px;"><button type="button" (click)="DeleteEnrollmentCourses()" [ngClass]="button" [disabled]="!enrollmentStatus"> ביטול כל הקורסים </button></div>
+  <div style="float: right;padding-left: 10px;"><button type="button" (click)="EndRegistration()" [ngClass]="button" [disabled]="!enrollmentStatus"> סיום הרשמה </button></div>
+  <div style="float: right;padding-left: 10px;"><button type="button" (click)="Pay()" [ngClass]="button" [disabled]="!enrollmentStatus"> תשלום </button></div>
+</div>
+<p>ההרשמה של הסטודנט</p>
+<p *ngIf="!enrollmentStatus"> מצב הרשמה...טרם בוצע רישום למערכת.</p>
+<p *ngIf="enrollmentStatus"> מצב הרשמה...{{ _enrollmentStatus }}</p>
+
+<div style="align-content:center">Student Courses List</div>
+<p *ngIf="!studentCourses"><em>לא נמצאו קורסים לסטודנט...</em></p>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="enrollmentStatus" >
+  <thead *ngIf="studentCourses && studentCourses.length>0">    
+    <tr>
+      <td> Title </td>
+      <td> LectorName </td>
+      <td> Year </td>
+      <td> Semester </td>
+      <td> Mandatory </td>
+      <td> Credits </td>
+      <td> Duration </td>
+    </tr>   
+  </thead>
+  <tbody  *ngIf="studentCourses && studentCourses.length>0">   
+    <tr *ngFor="let stdCourse of studentCourses" >
+      <td *ngIf="stdCourse.Title">{{ stdCourse.Title }} </td>
+      <td *ngIf="stdCourse.LectorName">{{ stdCourse.LectorName }}</td>
+      <td *ngIf="stdCourse.Year">{{ stdCourse.Year}}</td>
+      <td *ngIf="stdCourse.Semester" >{{ stdCourse.Semester }}</td>
+      <td *ngIf="stdCourse.Mandatory">{{ stdCourse.Mandatory }}</td>
+      <td *ngIf="stdCourse.Credits" >{{ stdCourse.Credits }}</td>
+      <td *ngIf="stdCourse.Duration" >{{ stdCourse.Duration }}</td>      
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+

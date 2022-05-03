@@ -1,0 +1,22 @@
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.imgFrame {
+  border: 5px solid #555;
+}
+
+button {
+  background-color: blue;
+  border: 1px solid #777;
+  width: 100px;
+}

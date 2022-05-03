@@ -1,0 +1,13 @@
+
+<h2>Report</h2>
+<form [formGroup]="mainform">
+ 
+    <input id="desc" type="text" #description
+           placeholder="Text..."
+           formControlName="text">
+
+</form>
+<button class="mat-raised-button" (click)="close()">Close</button>
+<button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+
+

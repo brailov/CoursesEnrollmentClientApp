@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="column" style="width:150px;">
+    <div class="imgFrame">
+      <img src="img_no_pic" alt="Snow" style="width:20px;">
+    </div>
+  </div>
+  <div class="column" style="width:50px;"></div>
+  <div class="column" style="width:500px;">
+    <div class="">
+      <div class="row">
+        <label style="width:100px;">Name:</label>
+        <label *ngIf="employeesDet">{{employeesDet.firstName }} {{ employeesDet.lastName }}</label>
+      </div>
+      <div class="row"><label style="width:100px;">Position:</label><label *ngIf="employeesDet">{{ employeesDet.position }}</label></div>
+    </div>
+    <div class="row">
+      --------------------------------------------------------
+    </div>
+    <div class="">
+      <div class="row">
+        <label style="width:100px;">Mananger:</label>
+        <label style="width:200px;" *ngIf="manager">{{manager.FirstName }} {{ manager.LastName }}</label>
+        <label style="width:200px;" *ngIf="!manager">You have no manager.</label>
+        <label *ngIf="manager"><button type="button" (click)="PopUpReportToMananger()" [ngClass]="button"> Report </button></label>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div style="align-content:center">My tasks: </div>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="tasks">
+  <thead>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{ task.text }}</td>
+      <td style="width:100px;">&nbsp;</td>
+      <td>{{ task.dueDate }}</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!tasks">You have no tasks</div>
+<br />
+<div style="align-content:center">My subordinates: </div>
+<table class='table table-striped' aria-labelledby="tableLabel">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ employeesDet.firstname }} {{ employeesDet.lastName }}</td>
+      <td>{{ employeesDet.position }}</td>
+      <td><button type="button" (click)="PopUpTaskToEmployee()" [ngClass]="button"> Assign Task </button></td>
+    </tr>
+  </tbody>
+</table>
