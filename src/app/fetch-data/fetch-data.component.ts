@@ -98,18 +98,30 @@ export class FetchDataComponent {
   }
 
   public AddCourseToEnrollment(_course: Course) {
-        
-    ///(Max(StartA, StartB) <= Min(EndA, EndB)
+     
+    // check if there is overlapping between courses.
     if(this.studentCourses && this.studentCourses.length>0 && 
-      this.studentCourses.find(x => x.Year == _course.Year && x.Semester == _course.Semester))
+      this.studentCourses.find(x => x.Year == _course.Year && x.Semester == _course.Semester && x.CourseID != _course.CourseID))
       {           
-        let allIntervals:any[] = this.studentCourses.filter(x => x.Year == _course.Year && x.Semester == _course.Semester);
+        let allIntervals:any[] = this.studentCourses.filter(x => x.Year == _course.Year && x.Semester == _course.Semester && x.CourseID != _course.CourseID);
         if(allIntervals && allIntervals.length>0){
           allIntervals.forEach(element => {
-            this.intervals.push([element.StartTime, '06:00']);            
-          });  
-          let interval =[_course.StartTime, '06:00'];
-          //this.isOverlapping(this.intervals, interval);               
+            let timeArr:any[] = element.StartTime.toString().split(":",3);
+            if(timeArr || timeArr.length>0) {
+              const hours = Number(timeArr[0]);
+              const duration = Number(element.Duration.split(":")[0])
+              const intervalEnd = `${(hours + duration)%24}:00:00`;
+              this.intervals.push([element.StartTime, intervalEnd]);      
+            }      
+          }); 
+          let timeArr:any[] = _course.StartTime.toString().split(":",3);
+          if(timeArr || timeArr.length>0) { 
+            const hours = Number(_course.StartTime.toString().split(':')[0]);   
+            const duration = Number(_course.Duration.toString().split(":")[0])     
+            const intervalEnd = `${(hours + duration)%24}:00:00`;
+            let interval =[_course.StartTime, intervalEnd];
+            this.isOverlapping(this.intervals, interval);      
+          }    
         }       
     }
     this.enrollmentCourseFKey = new EnrollmentCourseFKey();
